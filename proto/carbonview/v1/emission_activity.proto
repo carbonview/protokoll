@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package carbonview.v1;
+
+message EmissionActivity {
+  uint64 id = 1;
+  string etag = 2;
+
+  uint64 carbon_budget_id = 10;
+  string display_name = 11;
+  uint64 amount = 12;
+
+  // annual_change_rate represents the annual percentage change in emissions.
+  // A positive value indicates an increase, while a negative value indicates a decrease.
+  // If the value is zero, it indicates no change.
+  // This field is expressed as an integer percentage (e.g., 5 for 5%, -3 for -3%).
+  int32 annual_change_rate = 13;
+}

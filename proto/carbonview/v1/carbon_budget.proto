@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package carbonview.v1;
+
+import "google/protobuf/timestamp.proto";
+
+message CarbonBudget {
+  uint64 id = 1;
+  string etag = 2;
+
+  string city_name = 11;
+  int32 start_year = 12;
+
+  uint64 total_carbon_budget = 13;
+
+  // total_annual_emissions (computed field)
+  //
+  // total_annual_emissions is the total carbon emission recorded for the budget
+  // year.
+  //
+  // This field is computed based on the sum of all EmissionActivity amounts
+  // associated with this CarbonBudget for the budget year.
+  uint64 total_annual_emissions = 14;
+}

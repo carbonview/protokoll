@@ -1,0 +1,126 @@
+syntax = "proto3";
+
+package carbonview.v1;
+
+import "carbonview/v1/carbon_budget.proto";
+import "carbonview/v1/emission_activity.proto";
+import "google/protobuf/timestamp.proto";
+
+// CarbonBudgetService manages carbon budget for tracking and updating emissions budgets.
+service CarbonBudgetService {
+  // CreateCarbonBudget creates a new CarbonBudget.
+  rpc CreateCarbonBudget(CreateCarbonBudgetRequest) returns (CreateCarbonBudgetResponse);
+
+  // GetCarbonBudget retrieves a CarbonBudget.
+  rpc GetCarbonBudget(GetCarbonBudgetRequest) returns (GetCarbonBudgetResponse);
+
+  // UpdateCarbonBudget updates an existing CarbonBudget.
+  rpc UpdateCarbonBudget(UpdateCarbonBudgetRequest) returns (UpdateCarbonBudgetResponse);
+
+  // DeleteCarbonBudget deletes a CarbonBudget.
+  rpc DeleteCarbonBudget(DeleteCarbonBudgetRequest) returns (DeleteCarbonBudgetResponse);
+
+  // ListCarbonBudgets lists all CarbonBudgets with pagination support.
+  rpc ListCarbonBudgets(ListCarbonBudgetsRequest) returns (ListCarbonBudgetsResponse);
+
+  // CreateEmissionActivityToCarbonBudget adds an EmissionActivity to a CarbonBudget.
+  rpc CreateEmissionActivityToCarbonBudget(CreateEmissionActivityToCarbonBudgetRequest) returns (CreateEmissionActivityToCarbonBudgetResponse);
+
+  // UpdateEmissionActivityInCarbonBudget updates an EmissionActivity within a CarbonBudget.
+  rpc UpdateEmissionActivityInCarbonBudget(UpdateEmissionActivityInCarbonBudgetRequest) returns (UpdateEmissionActivityInCarbonBudgetResponse);
+
+  // DeleteEmissionActivityFromCarbonBudget removes an EmissionActivity from a CarbonBudget.
+  rpc DeleteEmissionActivityFromCarbonBudget(DeleteEmissionActivityFromCarbonBudgetRequest) returns (DeleteEmissionActivityFromCarbonBudgetResponse);
+
+  // ListEmissionActivitiesInCarbonBudget lists all EmissionActivities within a specific CarbonBudget.
+  rpc ListEmissionActivitiesInCarbonBudget(ListEmissionActivitiesInCarbonBudgetRequest) returns (ListEmissionActivitiesInCarbonBudgetResponse);
+}
+
+message CreateCarbonBudgetRequest {
+  string city_name = 11;
+  int32 start_year = 12;
+  uint64 total_carbon_budget = 13;
+}
+
+message CreateCarbonBudgetResponse {
+  CarbonBudget carbon_budget = 1;
+}
+
+message GetCarbonBudgetRequest {
+  uint64 id = 1;
+}
+
+message GetCarbonBudgetResponse {
+  CarbonBudget carbon_budget = 1;
+}
+
+message UpdateCarbonBudgetRequest {
+  string etag = 2;
+
+  string city_name = 11;
+
+  int32 start_year = 12;
+
+  uint64 total_carbon_budget = 13;
+}
+
+message UpdateCarbonBudgetResponse {
+  CarbonBudget carbon_budget = 1;
+}
+
+message DeleteCarbonBudgetRequest {
+  string etag = 2;
+}
+
+message DeleteCarbonBudgetResponse {}
+
+message ListCarbonBudgetsRequest {
+  int32 page_size = 1;
+  int32 offset = 2;
+}
+
+message ListCarbonBudgetsResponse {
+  repeated CarbonBudget carbon_budgets = 1;
+  uint64 count = 2;
+}
+
+message CreateEmissionActivityToCarbonBudgetRequest {
+  uint64 carbon_budget_id = 1;
+  string display_name = 2;
+  uint64 amount = 3;
+  int32 annual_change_rate = 13;
+}
+
+message CreateEmissionActivityToCarbonBudgetResponse {
+  EmissionActivity emission_activity = 1;
+}
+
+message UpdateEmissionActivityInCarbonBudgetRequest {
+  string etag = 2;
+
+  string display_name = 11;
+  uint64 amount = 12;
+  int32 annual_change_rate = 13;
+}
+
+message UpdateEmissionActivityInCarbonBudgetResponse {
+  EmissionActivity emission_activity = 1;
+}
+
+message DeleteEmissionActivityFromCarbonBudgetRequest {
+  string etag = 1;
+}
+
+message DeleteEmissionActivityFromCarbonBudgetResponse {
+}
+
+message ListEmissionActivitiesInCarbonBudgetRequest {
+  uint64 carbon_budget_id = 1;
+  int32 page_size = 2;
+  int32 offset = 3;
+}
+
+message ListEmissionActivitiesInCarbonBudgetResponse {
+  repeated EmissionActivity emission_activities = 1;
+  uint64 count = 2;
+}
